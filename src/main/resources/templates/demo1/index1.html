@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ko" capture-installed="true">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/webjars/jquery-ui/1.13.0/jquery-ui.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
+    <title>DEMO1</title>
+</head>
+<body style="padding:20px;">
+
+<div>이보다 쉬울수없다</div>
+
+<button type="button" class="btn btn-primary" id="button1">Primary</button>
+<button type="button" class="btn btn-secondary" id="button2">Secondary</button>
+<button type="button" class="btn btn-success"id="button3" >Success</button>
+
+<div id="target-div" style="margin-top:20px;width:100%;height:500px;background:yellow;">
+
+</div>
+
+</body>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/1.13.0/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+<script>
+
+    var fn_custom = {
+        ajax_get: function (url, callback) {
+            $.ajax({
+                cache: false,
+                url: url,
+                type: "GET",
+                dataType: "HTML",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                success: function (response) {
+                    if (typeof callback == 'function') {
+                        callback(response);
+                    }
+                }
+            });
+        }
+    }
+
+    $("#button1").click(function() {
+        fn_custom.ajax_get("demo1/list",function(response) {
+            $("#target-div").html(response);
+        });
+    });
+
+    $("#button2").click(function() {
+        $("#target-div").html("button2 http://{ADDRESS}/demo1/list");
+    });
+
+    $("#button3").click(function() {
+        $("#target-div").html("button3 http://{ADDRESS}/demo1/list");
+    });
+
+    //first click;
+    $("#button1").click();
+
+</script>
+</html>
